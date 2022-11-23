@@ -178,7 +178,7 @@ namespace TourneyKit2
         public static async Task HttpListen(int port)
         {
             httpListener = new HttpListener();
-            httpListener.Prefixes.Add("http://localhost:" + port.ToString() + "/");
+            httpListener.Prefixes.Add("http://*:" + port.ToString() + "/");
             httpListener.Start();
 
             Console.WriteLine("Started server @ " + httpListener.Prefixes.First());
