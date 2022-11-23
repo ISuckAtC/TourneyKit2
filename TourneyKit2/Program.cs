@@ -225,10 +225,12 @@ namespace TourneyKit2
         {
             int port = -1;
             int jsonUpdateInterval = -1;
+            bool displayWindow = true;
             try
             {
                 port = int.Parse(args[0]);
                 jsonUpdateInterval = int.Parse(args[1]);
+                bool.TryParse(args[2], out displayWindow);
             }
             catch (Exception e)
             {
@@ -247,17 +249,7 @@ namespace TourneyKit2
 
             Console.WriteLine("Hello World!");
 
-            Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_RESIZABLE);
-            Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_TRANSPARENT);
-            Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_TOPMOST);
-            Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_UNFOCUSED);
-            Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_MAXIMIZED);
-
-            Raylib.InitWindow(800, 450, "DS3 HudPlus - Raylib");
-
-            Raylib.SetWindowState(ConfigFlags.FLAG_WINDOW_MAXIMIZED);
-
-            Raylib.SetTargetFPS(60);
+            
 
 
             //Memory.RegisterHotKey((IntPtr)null, 1, 0x4000, 0x42);
@@ -333,11 +325,30 @@ namespace TourneyKit2
             Console.WriteLine(BitConverter.ToString(BitConverter.GetBytes((ulong)Memory.DS3Module.BaseAddress)) + " | " + BitConverter.ToString(bbb));
 
 
+            if (!displayWindow)
+            {
+                Thread.Sleep(-1);
+                return;
+            }
+
             //TestPositions.Add(SelfPlayer.Position);
 
             int tester = 0;
             System.Diagnostics.Stopwatch sw = new Stopwatch();
             long elapsed = 0;
+
+
+            Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_RESIZABLE);
+            Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_TRANSPARENT);
+            Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_TOPMOST);
+            Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_UNFOCUSED);
+            Raylib.SetConfigFlags(ConfigFlags.FLAG_WINDOW_MAXIMIZED);
+
+            Raylib.InitWindow(800, 450, "DS3 HudPlus - Raylib");
+
+            Raylib.SetWindowState(ConfigFlags.FLAG_WINDOW_MAXIMIZED);
+
+            Raylib.SetTargetFPS(60);
 
 
             while (!Raylib.WindowShouldClose())
