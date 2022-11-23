@@ -175,10 +175,10 @@ namespace TourneyKit2
                 await Task.Delay(interval);
             }
         }
-        public static async Task HttpListen()
+        public static async Task HttpListen(int port)
         {
             httpListener = new HttpListener();
-            httpListener.Prefixes.Add("http://localhost:42069/");
+            httpListener.Prefixes.Add("http://localhost:" + port.ToString() + "/");
             httpListener.Start();
 
             Console.WriteLine("Started server @ " + httpListener.Prefixes.First());
@@ -223,6 +223,19 @@ namespace TourneyKit2
 
         static void Main(string[] args)
         {
+            int port = -1;
+            int jsonUpdateInterval = -1;
+            try
+            {
+                port = int.Parse(args[0]);
+                jsonUpdateInterval = int.Parse(args[1]);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Inputs are incorrect, use like this: (programname or dotnet run) (port) (jsonUpdateInterval (ms))");
+                return;
+            } 
+
             Process ds3a = Process.GetProcessesByName("DarkSoulsIII")[0];
 
 
@@ -279,14 +292,14 @@ namespace TourneyKit2
 
             Thread updateJsonObjects = new Thread(async () => 
             {
-                await UpdateJsonObjects(100);
+                await UpdateJsonObjects(jsonUpdateInterval);
             });
 
             updateJsonObjects.Start();
 
             Thread httpListen = new Thread(async () =>
             {
-                await Task.Run(async () => await HttpListen());
+                await Task.Run(async () => await HttpListen(port));
             });
 
             httpListen.Start();
