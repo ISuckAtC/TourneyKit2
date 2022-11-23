@@ -213,7 +213,7 @@ namespace TourneyKit2
                     default: break;
                 }
 
-                response.ContentType = "text";
+                response.ContentType = "application/json";
                 response.ContentEncoding = Encoding.UTF8;
                 response.ContentLength64 = responseBytes.Length;
                 await response.OutputStream.WriteAsync(responseBytes, 0, responseBytes.Length);
