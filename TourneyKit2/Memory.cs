@@ -227,7 +227,7 @@ namespace TourneyKit2
 
         static public bool AOBPatternCheck(string[] pattern, byte[] aob)
         {
-            for (int i = 0; i < aob.Length; ++i, ++position)
+            for (int i = 0; i < aob.Length; ++i)
             {
                 if (pattern[i] != "??" && byte.Parse(pattern[i], NumberStyles.HexNumber) != aob[i])
                 {
