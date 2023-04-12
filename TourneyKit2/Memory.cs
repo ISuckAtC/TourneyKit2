@@ -227,27 +227,15 @@ namespace TourneyKit2
 
         static public bool AOBPatternCheck(string[] pattern, byte[] aob)
         {
-            int position = 0;
-
             for (int i = 0; i < aob.Length; ++i)
             {
-                if (pattern[position] == "??")
-                {
-                    position++;
-                }
-                else if (byte.Parse(pattern[position], NumberStyles.HexNumber) == aob[i])
-                {
-                    position++;
-                }
-                else
+                if (pattern[i] != "??" && byte.Parse(pattern[i], NumberStyles.HexNumber) != aob[i])
                 {
                     return false;
                 }
             }
             return true;
         }
-
-
 
         static public IntPtr PointerOffset(IntPtr ptr, long[] offsets)
         {
